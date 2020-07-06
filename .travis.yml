@@ -9,4 +9,4 @@ deploy:
   provider: heroku
   api_key:
     master: $API_KEY
-  app: the-photohack
+  app: the-image-finder

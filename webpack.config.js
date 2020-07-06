@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/app.js',
@@ -9,6 +10,11 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public')
   },
+  plugins: [
+  new webpack.DefinePlugin({
+    'process.env.PIXABAY_API_KEY': JSON.stringify(process.env.PIXABAY_API_KEY),
+    })
+  ],
   module: {
     rules: [
       {
