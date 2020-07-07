@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Search from './Search.jsx'
+import Footer from './Footer.jsx'
 
 export default class Layout extends Component {
 
@@ -14,10 +15,7 @@ export default class Layout extends Component {
         </h6>
         <hr className="mt-2 mb-5"/>
         <Search />
-        <footer className="footer">
-          <p className="container mb-10">Search results brought to you by <a href="https://pixabay.com/">Pixabay.</a>
-          </p>
-        </footer>
+        <Footer />
       </div>
     )
   }
