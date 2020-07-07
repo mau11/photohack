@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 const API_KEY = process.env.PIXABAY_API_KEY
-const URL = `https://pixabay.com/api/?key=${API_KEY}&q=`
+const URL = `https://pixabay.com/api/?key=${API_KEY}&per_page=96&q=`
 
 
 export default class Search extends Component {
@@ -9,22 +9,30 @@ export default class Search extends Component {
     super(props)
     this.state = {
       images: [],
+      results: [],
       user: '',
       userURL: '',
       imageURL: '',
+      amount: 12,
+      maxAmount: 96,
+      defaultKeyword: 'food'
     }
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleMore = this.handleMore.bind(this)
   }
 
   componentDidMount() {
-    this.getImages(URL+'food')
+    this.getImages(URL+this.state.defaultKeyword)
   }
 
   getImages(url) {
     return fetch(url)
     .then(response => response.json())
     .then(images => {
-      this.setState({images: images.hits.slice(0,12)})
+      this.setState({
+        results: images.hits,
+        images: images.hits.slice(0,this.state.amount)
+      })
     })
     .catch(err => {
       console.log('Error:', err)
@@ -34,7 +42,10 @@ export default class Search extends Component {
   handleSearch(e) {
     e.preventDefault()
     const data = new FormData(e.target)
-    const keywords = data.get('keywords')
+    let keywords = data.get('keywords')
+    if (!keywords.length) {
+      keywords = this.state.defaultKeyword
+    }
     this.getImages(URL+keywords)
   }
 
@@ -45,6 +56,13 @@ export default class Search extends Component {
       user: img.user,
       userURL: userURL,
       imageURL: img.largeImageURL
+    })
+  }
+
+  handleMore() {
+    let newAmount = this.state.amount + 12
+    this.setState({amount: newAmount}, () => {
+      this.setState({images: this.state.results.slice(0,newAmount)})
     })
   }
 
@@ -88,6 +106,15 @@ export default class Search extends Component {
               </div>
             </div>
           </div>
+          {/* --- More Images--- */}
+          {this.state.results.length > 0 ?
+            (this.state.amount <= this.state.maxAmount - 12 && this.state.results.length > this.state.amount) ?
+              <button className="btn btn-primary btn-sm mb-2" onClick={this.handleMore}>More Images</button>
+              :
+              <h6 className="mb-5">You've reached the max number of results. Please try searching another keyword.</h6>
+            :
+            <h6 className="mb-5">No results found. Please try another keyword.</h6>
+          }
         </div>
       </div>
     )
