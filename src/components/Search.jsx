@@ -47,11 +47,16 @@ export default class Search extends Component {
             </button>
           </div>
         </form>
+        <div>
+
+        </div>
         <div className="container">
-          <div className="row">
+          <div className="row text-center">
             {this.state.images.map((img, i) => (
-            <div id={'img-'+i} key={i} className="col-xs">
-              <img src={img.previewURL} className="img-thumbnail"/>
+            <div id={'img-'+i} key={i} className="col-lg-3 col-md-4 col-4">
+              <span class="d-block mb-4 h-100">
+                <img src={img.previewURL} className="img-thumbnail"/>
+              </span>
             </div>
             ))}
           </div>
