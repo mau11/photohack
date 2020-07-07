@@ -8,7 +8,10 @@ export default class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      images: []
+      images: [],
+      user: '',
+      userURL: '',
+      imageURL: '',
     }
     this.handleSearch = this.handleSearch.bind(this)
   }
@@ -35,6 +38,16 @@ export default class Search extends Component {
     this.getImages(URL+keywords)
   }
 
+  handleClick(i) {
+    let img = this.state.images[i]
+    let userURL = 'https://pixabay.com/users/'+ img.user_id
+    this.setState({
+      user: img.user,
+      userURL: userURL,
+      imageURL: img.largeImageURL
+    })
+  }
+
   render() {
     return (
       <div>
@@ -48,17 +61,32 @@ export default class Search extends Component {
           </div>
         </form>
         <div>
-
         </div>
         <div className="container">
           <div className="row text-center">
             {this.state.images.map((img, i) => (
-            <div id={'img-'+i} key={i} className="col-lg-3 col-md-4 col-4">
-              <span class="d-block mb-4 h-100">
+            <div id={'img-'+i} key={i} className="col-lg-3 col-md-4 col-4" onClick={() => {this.handleClick(i)}} data-toggle="modal" data-target="#imageModal">
+              <span className="d-block mb-4 h-100">
                 <img src={img.previewURL} className="img-thumbnail"/>
               </span>
             </div>
             ))}
+          </div>
+          {/* --- Image Modal --- */}
+          <div className="modal fade" id="imageModal" tabIndex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-body pt-0">
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <img src={this.state.imageURL} className="img-thumbnail"/>
+                </div>
+                <div className="modal-footer pt-0">
+                Photo by Pixabay user: <a href={this.state.userURL}>{this.state.user}</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
