@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/mau11/image-finder.svg?branch=master)](https://travis-ci.org/mau11/image-finder)
+
+![image-finder-screenshot](./public/images/image-finder-screenshot.jpg)
+
 # Image Finder
 
 > A royalty free image search app using Pixabay's API.
@@ -9,7 +13,7 @@
     1. [Installing Dependencies](#installing-dependencies)
     1. [Pixabay API](#pixabay-api)
     1. [Build and Serve App](#build-and-serve-app)
-1. [View Application](#run-application)
+1. [View Application](#view-application)
 
 ## Requirements
 
