@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 const API_KEY = process.env.PIXABAY_API_KEY
 const URL = `https://pixabay.com/api/?key=${API_KEY}&per_page=96&q=`
-
+const defaultAmount = 12
 
 export default class Search extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class Search extends Component {
       user: '',
       userURL: '',
       imageURL: '',
-      amount: 12,
+      amount: defaultAmount,
       maxAmount: 96,
       defaultKeyword: 'food'
     }
@@ -41,6 +41,7 @@ export default class Search extends Component {
 
   handleSearch(e) {
     e.preventDefault()
+    this.setState({amount: defaultAmount})
     const data = new FormData(e.target)
     let keywords = data.get('keywords')
     if (!keywords.length) {
